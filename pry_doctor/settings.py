@@ -38,11 +38,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'aplication.core.apps.CoreConfig',
+    'aplication.medicines.apps.MedicinesConfig',
     'crispy_forms',
     'crispy_bootstrap5',  # o el framework que estés usando
 ]
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"  # O bootstrap4 u otro framework si lo prefieres
 CRISPY_TEMPLATE_PACK = "bootstrap5"  # El paquete que hayas instalado
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
