@@ -1,9 +1,9 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, render
 from django.contrib.auth import login, logout, authenticate
-from django.db import IntegrityError
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.db import IntegrityError
 
 # Create your views here.
 
@@ -14,40 +14,38 @@ def signup(request):
         })
     else:
         if request.POST['password1'] == request.POST['password2']:
-            # Register user
             try:
                 user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST
-                    ['password1'])
+                    username=request.POST['username'], password=request.POST['password1'])
                 user.save()
-                login(request, user)  # Crear cookie y redireccionarlo
-                # Return para una vez que termine ahi una vez que se guarde el usuario
-                return redirect('core:home')
+                login(request, user)  # Log the user in after successful registration
+
+                # **Consistent Redirection to Home with reverse_lazy:**
+                return redirect(reverse_lazy('core:home'))  # Use reverse_lazy for maintainability
             except IntegrityError:
                 return render(request, "security/signup.html", {
                     'form': UserCreationForm,
                     "error": 'Username already exists'
                 })
-        return render(request, "security/signup.html", {
-            'form': UserCreationForm,
-            "error": 'Password do not match'
-        })
-        
+        else:
+            return render(request, "security/signup.html", {
+                'form': UserCreationForm,
+                "error": 'Password do not match'
+            })
+
 def signout(request):
     logout(request)
-    # Return para redireccionar al home después de cerrar sesión
-    return redirect('core:home')
+    # **Redirection to Home after Sign Out:**
+    return redirect(reverse_lazy('core:home'))  # Use reverse_lazy for maintainability
 
-
-def siging(request):
+def signin(request):  # Corrected typo in function name
     if request.method == 'GET':
         return render(request, "security/signin.html", {
             'form': AuthenticationForm
         })
     else:
         user = authenticate(
-            request, username=request.POST['username'],password=request.POST
-            ['password'])
+            request, username=request.POST['username'], password=request.POST['password'])
         if user is None:
             return render(request, 'security/signin.html', {
                 'form': AuthenticationForm,
@@ -55,5 +53,5 @@ def siging(request):
             })
         else:
             login(request, user)
-            return redirect('core:home')
-
+            # **Redirection to Home after Sign In:**
+            return redirect(reverse_lazy('core:home'))  # Use reverse_lazy for maintainability
