@@ -19,5 +19,12 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    #  Auth
+    # path('signup/', views.signup, name='signup'),
+    # path('logout/', views.signout, name='logout'),
+    # path('signin/', views.siging, name='signin'),
+
     path('', include('aplication.core.urls',namespace='core')),
+    path('medicines/', include('aplication.medicines.urls',namespace='medicines')),
 ]
