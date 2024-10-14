@@ -1,4 +1,5 @@
 from django.urls import reverse_lazy
+from django.db.models.query import QuerySet
 from django.shortcuts import render
 from aplication.core.forms import DoctorForm
 from aplication.core.models import Doctor
@@ -9,8 +10,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
          
 def home(request):
    data={"title":"Medical","title1":"Sistema Medico Online"}
-   #return HttpResponse("<h1>Pantalla de Inicio</h1>")
-   #return JsonResponse(data)
    return render(request,'core/home.html',data)
 
 class doctor_ListView(ListView):

@@ -1,5 +1,4 @@
 from django import forms
-
 from aplication.core.models import Doctor
 
 class DoctorForm(forms.ModelForm):

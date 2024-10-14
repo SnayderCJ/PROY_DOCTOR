@@ -4,9 +4,9 @@ from aplication.medicines.models import Medications
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class medicament_ListView(ListView):
+class medicament_ListView(LoginRequiredMixin, ListView):
     model = Medications
-    template_name = 'core/doctor/list_medicament.html'
+    template_name = 'medicines/list_medicament.html'
     context_object_name = 'medicament_list'
 
     
@@ -16,11 +16,11 @@ class medicament_ListView(ListView):
         context['title1'] = 'Sistema Medico Online'
         return context
     
-class Medicament_CreateView(CreateView):
+class Medicament_CreateView(LoginRequiredMixin, CreateView):
     model = Medications
     form_class = MedicationForm
-    template_name = 'core/doctor/form_medicament.html'
-    success_url = reverse_lazy('core:medicament_list')  # Redirecciona a la lista de medicamentos
+    template_name = 'medicines/form_medicament.html'
+    success_url = reverse_lazy('medicines:medicament_list')  # Redirecciona a la lista de medicamentos
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -34,11 +34,11 @@ class Medicament_CreateView(CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class Medicament_UpdateView(UpdateView):
+class Medicament_UpdateView(LoginRequiredMixin, UpdateView):
     model = Medications
     form_class = MedicationForm
-    template_name = 'core/doctor/form_medicament.html'
-    success_url = reverse_lazy('core:medicament_list') #Redireccion a la lista de doctores
+    template_name = 'medicines/form_medicament.html'
+    success_url = reverse_lazy('medicines:medicament_list') #Redireccion a la lista de doctores
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -51,10 +51,10 @@ class Medicament_UpdateView(UpdateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
-class medicament_DeleteView(DeleteView):
+class medicament_DeleteView(LoginRequiredMixin, DeleteView):
     model = Medications
-    template_name = 'core/doctor/delete_medicament.html'
-    success_url = reverse_lazy('core:medicament_list')
+    template_name = 'medicines/delete_medicament.html'
+    success_url = reverse_lazy('medicines:medicament_list')
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
