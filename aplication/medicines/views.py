@@ -3,17 +3,24 @@ from aplication.medicines.forms import MedicationForm
 from aplication.medicines.models import Medications
 from django.views.generic import ListView, DeleteView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 
 class medicament_ListView(LoginRequiredMixin, ListView):
     model = Medications
     template_name = 'medicines/list_medicament.html'
     context_object_name = 'medicament_list'
 
+    def get_queryset(self):
+        if self.request.user.is_authenticated:  # Comprueba si el usuario está autenticado
+            return Medications.objects.filter(user=self.request.user)
+        else:
+            return Medications.objects.none()
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Medical'
         context['title1'] = 'Sistema Medico Online'
+        context['current_user'] = self.request.user
         return context
     
 class Medicament_CreateView(LoginRequiredMixin, CreateView):
