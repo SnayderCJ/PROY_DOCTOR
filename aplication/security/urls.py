@@ -3,7 +3,7 @@ from aplication.security import views
 from django.conf.urls.static import static
 from django.conf import settings
  
-app_name= 'medicines' # define un espacio de nombre para la aplicacion
+app_name= 'security' # define un espacio de nombre para la aplicacion
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),

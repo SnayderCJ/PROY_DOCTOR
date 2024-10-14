@@ -9,7 +9,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 def signup(request):
     if request.method == "GET":
-        return render(request, "core/signup.html", {
+        return render(request, "security/signup.html", {
             "form": UserCreationForm
         })
     else:
@@ -24,11 +24,11 @@ def signup(request):
                 # Return para una vez que termine ahi una vez que se guarde el usuario
                 return redirect('core:home')
             except IntegrityError:
-                return render(request, "core/signup.html", {
+                return render(request, "security/signup.html", {
                     'form': UserCreationForm,
                     "error": 'Username already exists'
                 })
-        return render(request, "core/signup.html", {
+        return render(request, "security/signup.html", {
             'form': UserCreationForm,
             "error": 'Password do not match'
         })
@@ -41,7 +41,7 @@ def signout(request):
 
 def siging(request):
     if request.method == 'GET':
-        return render(request, "core/signin.html", {
+        return render(request, "security/signin.html", {
             'form': AuthenticationForm
         })
     else:
@@ -49,7 +49,7 @@ def siging(request):
             request, username=request.POST['username'],password=request.POST
             ['password'])
         if user is None:
-            return render(request, 'core/signin.html', {
+            return render(request, 'security/signin.html', {
                 'form': AuthenticationForm,
                 'error': 'Username or password is incorrect'
             })

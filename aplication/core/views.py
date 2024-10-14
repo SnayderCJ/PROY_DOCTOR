@@ -23,7 +23,7 @@ class doctor_ListView(ListView):
         context['title1'] = 'Sistema Medico Online'
         return context
 
-class Doctor_CreateView(CreateView):
+class Doctor_CreateView(LoginRequiredMixin, CreateView):
     model = Doctor
     form_class = DoctorForm
     template_name = 'core/doctor/form.html'
@@ -35,7 +35,7 @@ class Doctor_CreateView(CreateView):
         context['title1'] = 'Crear un nuevo doctor'
         return context
     
-class Doctor_UpdateView(UpdateView):
+class Doctor_UpdateView(LoginRequiredMixin, UpdateView):
     model = Doctor
     form_class = DoctorForm
     template_name = 'core/doctor/form.html'
@@ -47,7 +47,7 @@ class Doctor_UpdateView(UpdateView):
         context['title1'] = 'Editar doctor'
         return context
     
-class doctor_DeleteView(DeleteView):
+class doctor_DeleteView(LoginRequiredMixin, DeleteView):
     model = Doctor
     template_name = 'core/doctor/delete.html'
     success_url = reverse_lazy('core:doctor_list')
